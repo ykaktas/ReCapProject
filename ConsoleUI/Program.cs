@@ -33,32 +33,59 @@ namespace ConsoleUI
             //AddBrand();
             //DeleteBrand();
             //GetAllBrands();
-            //GetBrandById();
-           // GetCarsByDetails();
+            // GetBrandById();
+            // GetCarsByDetails();
+            //-------USER METHODS-----//
+            // AddUser();
+            AddRental();
 
+        }
+
+        private static void AddRental()
+        {
+          
+            RentalManager rentalManager = new RentalManager(new EfRentalDal());
+            var result = rentalManager.Add(new Rental { CarId = 1, CustomerId = 1, Id = 1, RentDate = (new DateTime(2025, 02, 03)) });
+         
+            Console.WriteLine(result.Message);
+
+        }
+
+        private static void AddUser()
+        {
+            UserManager userManager = new UserManager(new EfUserDal());
+
+            userManager.Delete(new User { Id = 2 });
+            foreach (var result in userManager.GetAll().Data)
+            {
+                Console.WriteLine(result.Email);
+            }
         }
 
         private static void GetCarsByDetails()
         {
             CarManager carManager = new CarManager(new EfCarDal());
-            var result = carManager.GetCarDetails();
-            foreach (var item in result)
+            
+            foreach (var item in carManager.GetCarDetails().Data)
             {
-                Console.WriteLine(item.Description + " " + item.BrandName + " " + item.ColorName + " " + item.DailyPrice);
+                Console.WriteLine( item.Description + " " + item.BrandName + " " + item.ColorName + " " + item.DailyPrice);
             }
         }
 
         private static void GetBrandById()
         {
             BrandManager brandManager = new BrandManager(new EfBrandDal());
-            var result = brandManager.GetById(2);
-            Console.WriteLine(result.BrandName);
+            foreach (var result in brandManager.GetById(3).Data)
+            {
+                Console.WriteLine(result.BrandName);
+            } 
+            
         }
 
         private static void GetAllBrands()
         {
             BrandManager brandManager = new BrandManager(new EfBrandDal());
-            foreach (var brands in brandManager.GetAll())
+            foreach (var brands in brandManager.GetAll().Data)
             {
                 Console.WriteLine(brands.BrandName);
             }
@@ -85,7 +112,7 @@ namespace ConsoleUI
         private static void GetCarsByColorId()
         {
             CarManager carManager = new CarManager(new EfCarDal());
-            foreach (var car in carManager.GetCarsByColorId(3))
+            foreach (var car in carManager.GetCarsByColorId(3).Data)
             {
                 Console.WriteLine(car.Description);
             }
@@ -94,7 +121,7 @@ namespace ConsoleUI
         private static void GetCarsByBrandId()
         {
             CarManager carManager = new CarManager(new EfCarDal());
-            foreach (var car in carManager.GetCarsByBrandId(2))
+            foreach (var car in carManager.GetCarsByBrandId(2).Data)
             {
                 Console.WriteLine(car.Description);
             }
@@ -104,9 +131,10 @@ namespace ConsoleUI
         {
             CarManager carManager = new CarManager(new EfCarDal());
 
-            foreach (var car in carManager.GetAll())
+            foreach (var car in carManager.GetAll().Data)
             {
                 Console.WriteLine(car.Description);
+                
             }
         }
 
@@ -137,14 +165,14 @@ namespace ConsoleUI
         {
             ColorManager colorManager = new ColorManager(new EfColorDal());
             var result = colorManager.GetById(2);
-            Console.WriteLine(result.ColorName);
+            Console.WriteLine(result.Data);
         }
 
         private static void GetAllColor()
         {
             ColorManager colorManager = new ColorManager(new EfColorDal());
            
-            foreach (var color in colorManager.GetAll())
+            foreach (var color in colorManager.GetAll().Data)
             {
                 Console.WriteLine(color.ColorName);
             }
