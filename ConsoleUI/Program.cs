@@ -36,8 +36,10 @@ namespace ConsoleUI
             // GetBrandById();
             // GetCarsByDetails();
             //-------USER METHODS-----//
-            // AddUser();
-            AddRental();
+            // DeleteUser();
+            //AddRental();
+            //UserManager userManager = new UserManager(new EfCustomerDal());
+            //userManager.Add(new Customer { CompanyName = "yka" });
 
         }
 
@@ -51,7 +53,7 @@ namespace ConsoleUI
 
         }
 
-        private static void AddUser()
+        private static void DeleteUser()
         {
             UserManager userManager = new UserManager(new EfUserDal());
 
