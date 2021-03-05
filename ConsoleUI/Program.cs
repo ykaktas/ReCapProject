@@ -1,4 +1,5 @@
 ﻿using Business.Concrete;
+using Core.Entities.Concrete;
 using DataAccess.Concrete;
 using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
@@ -41,6 +42,7 @@ namespace ConsoleUI
             //UserManager userManager = new UserManager(new EfCustomerDal());
             //userManager.Add(new Customer { CompanyName = "yka" });
 
+            
         }
 
         private static void AddRental()
@@ -74,15 +76,15 @@ namespace ConsoleUI
             }
         }
 
-        private static void GetBrandById()
-        {
-            BrandManager brandManager = new BrandManager(new EfBrandDal());
-            foreach (var result in brandManager.GetById(3).Data)
-            {
-                Console.WriteLine(result.BrandName);
-            } 
+        //private static void GetBrandById()
+        //{
+        //    BrandManager brandManager = new BrandManager(new EfBrandDal());
+        //    foreach (var result in brandManager.GetById(3).Data)
+        //    {
+        //        Console.WriteLine(result.BrandName);
+        //    } 
             
-        }
+        //}
 
         private static void GetAllBrands()
         {

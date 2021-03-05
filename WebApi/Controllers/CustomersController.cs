@@ -33,7 +33,7 @@ namespace WebApi.Controllers
         [HttpGet("GetById")]
         public IActionResult GetById(int id)
         {
-            var result = _customerService.GetById(2);
+            var result = _customerService.GetById(id);
             if (result.Success)
             {
                 return Ok(result.Data);

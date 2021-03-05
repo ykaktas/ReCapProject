@@ -1,5 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -16,10 +18,16 @@ namespace Business.Concrete
         {
             _customerDal = customerManager;
         }
+        [ValidationAspect(typeof(CustomerValidator))]
         public IResult Add(Customer Customer)
         {
             _customerDal.Add(Customer);
             return new SuccessResult();
+        }
+
+        public IResult AddTransactionalTest(Customer entity)
+        {
+            throw new NotImplementedException();
         }
 
         public IResult Delete(Customer Customer)
@@ -34,9 +42,9 @@ namespace Business.Concrete
             
         }
 
-        public IDataResult<List<Customer>> GetById(int CustomerId)
+        public IDataResult<Customer> GetById(int CustomerId)
         {
-            return new SuccessDataResult<List<Customer>>(_customerDal.GetAll(c=>c.UserId==CustomerId), Messages.ProductsListed);
+            return new SuccessDataResult<Customer>(_customerDal.Get(c=>c.Id==CustomerId));
         }
 
         public IResult Update(Customer Customer)

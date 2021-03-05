@@ -1,11 +1,7 @@
 ﻿using Business.Abstract;
 using Entities.Concrete;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace WebApi.Controllers
 {
@@ -14,12 +10,16 @@ namespace WebApi.Controllers
     public class CarsController : ControllerBase
     {
         ICarService _carService;
+       
 
         public CarsController(ICarService carService)
         {
             _carService = carService;
+           
         }
         [HttpGet("GetAll")]
+        [Authorize(Roles = "Car.List")]
+
         public IActionResult GetAll()
         {
             var result = _carService.GetAll();
@@ -33,7 +33,7 @@ namespace WebApi.Controllers
         [HttpGet("GetCarsByBrandId")]
         public IActionResult GetCarsByBrandId(int id)
         {
-            var result = _carService.GetCarsByBrandId(2);
+            var result = _carService.GetCarsByBrandId(id);
             if (result.Success)
             {
                 return Ok(result.Data);
@@ -42,9 +42,9 @@ namespace WebApi.Controllers
             return BadRequest(result.Message);
         }
         [HttpGet("GetCarsByColorId")]
-        public IActionResult GetCarsByColorId()
+        public IActionResult GetCarsByColorId(int id)
         {
-            var result = _carService.GetCarsByColorId(2);
+            var result = _carService.GetCarsByColorId(id);
             if (result.Success)
             {
                 return Ok(result.Data);
@@ -92,6 +92,5 @@ namespace WebApi.Controllers
             }
             return BadRequest(result);
         }
-
     }
 }
